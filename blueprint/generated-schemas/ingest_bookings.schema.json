@@ -1,0 +1,36 @@
+{
+  "description": "Configuration for booking data ingestion.",
+  "properties": {
+    "conn_id": {
+      "description": "Airflow connection ID for DuckDB",
+      "title": "Conn Id",
+      "type": "string"
+    },
+    "n_bookings": {
+      "default": 5,
+      "description": "Number of random bookings to generate per run",
+      "maximum": 100,
+      "minimum": 1,
+      "title": "N Bookings",
+      "type": "integer"
+    },
+    "blueprint": {
+      "type": "string",
+      "const": "ingest_bookings",
+      "description": "The blueprint template to use"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1,
+      "description": "The blueprint version"
+    }
+  },
+  "required": [
+    "blueprint",
+    "version",
+    "conn_id"
+  ],
+  "title": "IngestBookings",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

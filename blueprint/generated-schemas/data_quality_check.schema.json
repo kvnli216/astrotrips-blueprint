@@ -1,0 +1,73 @@
+{
+  "additionalProperties": false,
+  "description": "Configuration for data quality validation.",
+  "properties": {
+    "conn_id": {
+      "description": "Airflow connection ID for DuckDB",
+      "title": "Conn Id",
+      "type": "string"
+    },
+    "table": {
+      "description": "Table name to validate",
+      "title": "Table",
+      "type": "string"
+    },
+    "checks": {
+      "description": "List of column checks to run",
+      "items": {
+        "description": "A single column validation rule.",
+        "properties": {
+          "check_type": {
+            "enum": [
+              "null_check",
+              "distinct_check",
+              "min",
+              "max"
+            ],
+            "title": "Check Type",
+            "type": "string"
+          },
+          "column": {
+            "description": "Column name to validate",
+            "title": "Column",
+            "type": "string"
+          },
+          "threshold": {
+            "description": "Threshold value for the check",
+            "title": "Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "check_type",
+          "column",
+          "threshold"
+        ],
+        "title": "ColumnCheck",
+        "type": "object"
+      },
+      "title": "Checks",
+      "type": "array"
+    },
+    "blueprint": {
+      "type": "string",
+      "const": "data_quality_check",
+      "description": "The blueprint template to use"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1,
+      "description": "The blueprint version"
+    }
+  },
+  "required": [
+    "blueprint",
+    "version",
+    "conn_id",
+    "table",
+    "checks"
+  ],
+  "title": "DataQualityCheck",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

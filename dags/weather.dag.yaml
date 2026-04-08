@@ -1,0 +1,10 @@
+dag_id: astrotrips_weather
+schedule: "@daily"
+description: "Fetch and load daily weather data for all planets"
+
+steps:
+  weather:
+    blueprint: weather_ingest
+    version: 2
+    conn_id: duckdb_astrotrips
+    max_storm_risk: 0.8

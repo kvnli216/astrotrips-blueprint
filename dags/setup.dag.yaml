@@ -1,0 +1,9 @@
+dag_id: astrotrips_setup
+schedule: "@once"
+description: "Initialize the AstroTrips DuckDB database with schema and sample data"
+
+steps:
+  init_database:
+    blueprint: setup_database
+    conn_id: duckdb_astrotrips
+    seed_data: true

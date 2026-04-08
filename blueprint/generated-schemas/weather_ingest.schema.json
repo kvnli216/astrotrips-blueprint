@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "weather_ingest",
+  "oneOf": [
+    {
+      "description": "Configuration for weather data ingestion.",
+      "properties": {
+        "conn_id": {
+          "description": "Airflow connection ID for DuckDB",
+          "title": "Conn Id",
+          "type": "string"
+        },
+        "blueprint": {
+          "type": "string",
+          "const": "weather_ingest",
+          "description": "The blueprint template to use"
+        },
+        "version": {
+          "type": "integer",
+          "const": 1,
+          "description": "The blueprint version"
+        }
+      },
+      "required": [
+        "blueprint",
+        "version",
+        "conn_id"
+      ],
+      "title": "WeatherIngest",
+      "type": "object"
+    },
+    {
+      "description": "Configuration for weather data ingestion with storm risk filtering.",
+      "properties": {
+        "conn_id": {
+          "description": "Airflow connection ID for DuckDB",
+          "title": "Conn Id",
+          "type": "string"
+        },
+        "max_storm_risk": {
+          "default": 1.0,
+          "description": "Only load weather readings with storm_risk at or below this threshold",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Max Storm Risk",
+          "type": "number"
+        },
+        "blueprint": {
+          "type": "string",
+          "const": "weather_ingest",
+          "description": "The blueprint template to use"
+        },
+        "version": {
+          "type": "integer",
+          "const": 2,
+          "description": "The blueprint version"
+        }
+      },
+      "required": [
+        "blueprint",
+        "version",
+        "conn_id"
+      ],
+      "title": "WeatherIngest",
+      "type": "object"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "version"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "description": "Configuration for database setup.",
+  "properties": {
+    "conn_id": {
+      "description": "Airflow connection ID for DuckDB",
+      "title": "Conn Id",
+      "type": "string"
+    },
+    "seed_data": {
+      "default": true,
+      "description": "Load sample fixture data after creating schema",
+      "title": "Seed Data",
+      "type": "boolean"
+    },
+    "blueprint": {
+      "type": "string",
+      "const": "setup_database",
+      "description": "The blueprint template to use"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1,
+      "description": "The blueprint version"
+    }
+  },
+  "required": [
+    "blueprint",
+    "version",
+    "conn_id"
+  ],
+  "title": "SetupDatabase",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

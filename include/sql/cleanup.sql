@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS promo_codes;
+DROP TABLE IF EXISTS bookings;
+
+DROP TABLE IF EXISTS routes;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS planets;
+
+DROP TABLE IF EXISTS daily_planet_report;
+DROP TABLE IF EXISTS planet_weather;
+
+DROP SEQUENCE IF EXISTS payment_id_seq;
+DROP SEQUENCE IF EXISTS booking_id_seq;
