@@ -2,7 +2,7 @@ dag_id: astrotrips_daily_pipeline
 schedule: "@daily"
 tags: []
 default_args: {}
-catchup: false
+catchup: true
 start_date: null
 description: "Daily booking ingestion, planet reporting, and data quality validation"
 
@@ -10,6 +10,7 @@ steps:
   ingest:
     blueprint: ingest_bookings
     conn_id: duckdb_astrotrips
+    n_bookings: 5
 
   report:
     blueprint: planet_report
@@ -19,22 +20,6 @@ steps:
   validate:
     blueprint: data_quality_check
     depends_on: [ report ]
-
-  dag_args-3:
-    blueprint: dag_args
-
-  data_quality_check-4:
-    blueprint: data_quality_check
-
-  ingest_bookings-5:
-    blueprint: ingest_bookings
-
-  planet_report-6:
-    blueprint: planet_report
-
-  setup_database-7:
-    blueprint: setup_database
-
-  weather_ingest-8:
-    blueprint: weather_ingest
-    version: 2
+    conn_id: duckdb_astrotrips
+    table: daily_planet_report
+    checks: [ { check_type: null_check, column: planet_name, threshold: 0 }, { check_type: distinct_check, column: planet_name, threshold: 3 }, { check_type: min, column: total_passengers, threshold: 1 } ]
