@@ -27,12 +27,3 @@ steps:
   weather_ingest-6:
     blueprint: weather_ingest
     version: 2
-
-  weather_ingest-9:
-    blueprint: weather_ingest
-
-  weather_ingest-7:
-    blueprint: weather_ingest
-    version: 1
-  setup_database-6:
-    blueprint: setup_database

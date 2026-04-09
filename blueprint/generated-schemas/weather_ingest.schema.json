@@ -45,56 +45,6 @@
           "title": "Max Storm Risk",
           "type": "number"
         },
-        "temperature_unit": {
-          "enum": ["celsius", "fahrenheit", "kelvin"],
-          "default": "celsius",
-          "title": "Temperature Unit",
-          "description": "Unit for temperature readings",
-          "type": "string"
-        },
-        "api_endpoint": {
-          "anyOf": [
-            { "type": "string" },
-            { "type": "null" }
-          ],
-          "default": null,
-          "title": "Api Endpoint",
-          "description": "Custom weather API endpoint URL override"
-        },
-        "fetch_retries": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 10
-            },
-            { "type": "null" }
-          ],
-          "default": null,
-          "title": "Fetch Retries",
-          "description": "Number of retries for weather API calls"
-        },
-        "include_forecast": {
-          "anyOf": [
-            { "type": "boolean" },
-            { "type": "null" }
-          ],
-          "default": null,
-          "title": "Include Forecast",
-          "description": "Whether to include forecast data alongside current readings"
-        },
-        "data_format": {
-          "anyOf": [
-            {
-              "type": "string",
-              "enum": ["json", "csv", "parquet"]
-            },
-            { "type": "null" }
-          ],
-          "default": null,
-          "title": "Data Format",
-          "description": "Output format for weather data staging"
-        },
         "blueprint": {
           "type": "string",
           "const": "weather_ingest",
