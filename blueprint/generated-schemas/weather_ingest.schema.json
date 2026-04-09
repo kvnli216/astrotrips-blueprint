@@ -3,6 +3,33 @@
   "title": "weather_ingest",
   "oneOf": [
     {
+      "description": "Configuration for weather data ingestion.",
+      "properties": {
+        "conn_id": {
+          "description": "Airflow connection ID for DuckDB",
+          "title": "Conn Id",
+          "type": "string"
+        },
+        "blueprint": {
+          "type": "string",
+          "const": "weather_ingest",
+          "description": "The blueprint template to use"
+        },
+        "version": {
+          "type": "integer",
+          "const": 1,
+          "description": "The blueprint version"
+        }
+      },
+      "required": [
+        "blueprint",
+        "version",
+        "conn_id"
+      ],
+      "title": "WeatherIngest",
+      "type": "object"
+    },
+    {
       "description": "Configuration for weather data ingestion with storm risk filtering.",
       "properties": {
         "conn_id": {
@@ -75,33 +102,6 @@
         },
         "version": {
           "type": "integer",
-          "const": 1,
-          "description": "The blueprint version"
-        }
-      },
-      "required": [
-        "blueprint",
-        "version",
-        "conn_id"
-      ],
-      "title": "WeatherIngest",
-      "type": "object"
-    },
-    {
-      "description": "Configuration for weather data ingestion.",
-      "properties": {
-        "conn_id": {
-          "description": "Airflow connection ID for DuckDB",
-          "title": "Conn Id",
-          "type": "string"
-        },
-        "blueprint": {
-          "type": "string",
-          "const": "weather_ingest",
-          "description": "The blueprint template to use"
-        },
-        "version": {
-          "type": "integer",
           "const": 2,
           "description": "The blueprint version"
         }
@@ -113,7 +113,7 @@
       ],
       "title": "WeatherIngest",
       "type": "object"
-    },
+    }
   ],
   "discriminator": {
     "propertyName": "version"
