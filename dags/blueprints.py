@@ -13,15 +13,7 @@ from airflow.providers.common.sql.operators.sql import (
 )
 from airflow.sdk import TaskGroup, task
 
-from blueprint import (
-    BaseModel,
-    Blueprint,
-    BlueprintDagArgs,
-    ConfigDict,
-    Field,
-    TaskOrGroup,
-    field_validator,
-)
+from blueprint import BaseModel, Blueprint, BlueprintDagArgs, ConfigDict, Field, TaskOrGroup, field_validator
 
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/usr/local/airflow")
 
@@ -34,27 +26,6 @@ AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/usr/local/airflow")
 class AstroTripsDagArgsConfig(BaseModel):
     schedule: str | None = None
     description: str | None = None
-    tags: list[str] = Field(
-        default_factory=list, description="Tags for filtering DAGs in the UI"
-    )
-    catchup: bool = False
-    start_date: str | None = Field(
-        default=None, description="Earliest logical date (ISO 8601)"
-    )
-    default_args: dict = Field(
-        default_factory=dict, description="Default arguments applied to all tasks"
-    )
-    max_active_runs: int | None = Field(
-        default=None, ge=1, description="Max concurrent DAG runs"
-    )
-    max_active_tasks: int | None = Field(
-        default=None, ge=1, description="Max concurrent tasks across runs"
-    )
-    owner: str | None = None
-    is_paused_upon_creation: bool | None = None
-    doc_md: str | None = Field(
-        default=None, description="Markdown documentation for the Airflow UI"
-    )
 
 
 class AstroTripsDagArgs(BlueprintDagArgs[AstroTripsDagArgsConfig]):
@@ -68,25 +39,6 @@ class AstroTripsDagArgs(BlueprintDagArgs[AstroTripsDagArgsConfig]):
             kwargs["schedule"] = config.schedule
         if config.description is not None:
             kwargs["description"] = config.description
-        if config.tags:
-            kwargs["tags"] = config.tags
-        kwargs["catchup"] = config.catchup
-        if config.start_date is not None:
-            from datetime import datetime
-
-            kwargs["start_date"] = datetime.fromisoformat(config.start_date)
-        if config.default_args:
-            kwargs["default_args"] = config.default_args
-        if config.max_active_runs is not None:
-            kwargs["max_active_runs"] = config.max_active_runs
-        if config.max_active_tasks is not None:
-            kwargs["max_active_tasks"] = config.max_active_tasks
-        if config.owner is not None:
-            kwargs.setdefault("default_args", {})["owner"] = config.owner
-        if config.is_paused_upon_creation is not None:
-            kwargs["is_paused_upon_creation"] = config.is_paused_upon_creation
-        if config.doc_md is not None:
-            kwargs["doc_md"] = config.doc_md
         return kwargs
 
 
@@ -99,9 +51,7 @@ class SetupDatabaseConfig(BaseModel):
     """Configuration for database setup."""
 
     conn_id: str = Field(description="Airflow connection ID for DuckDB")
-    seed_data: bool = Field(
-        default=True, description="Load sample fixture data after creating schema"
-    )
+    seed_data: bool = Field(default=True, description="Load sample fixture data after creating schema")
 
 
 class SetupDatabase(Blueprint[SetupDatabaseConfig]):
@@ -141,12 +91,7 @@ class IngestBookingsConfig(BaseModel):
     """Configuration for booking data ingestion."""
 
     conn_id: str = Field(description="Airflow connection ID for DuckDB")
-    n_bookings: int = Field(
-        default=5,
-        ge=1,
-        le=100,
-        description="Number of random bookings to generate per run",
-    )
+    n_bookings: int = Field(default=5, ge=1, le=100, description="Number of random bookings to generate per run")
 
 
 class IngestBookings(Blueprint[IngestBookingsConfig]):
@@ -256,6 +201,7 @@ class WeatherIngest(Blueprint[WeatherIngestConfig]):
 
     def render(self, config: WeatherIngestConfig) -> TaskOrGroup:
         with TaskGroup(group_id=self.step_id) as group:
+
             get_planets = SQLExecuteQueryOperator(
                 task_id="get_planets",
                 conn_id=config.conn_id,
@@ -285,13 +231,7 @@ class WeatherIngest(Blueprint[WeatherIngestConfig]):
                 for w in weather_data:
                     db.execute(
                         "INSERT INTO planet_weather VALUES (?, ?, ?, ?, ?)",
-                        [
-                            w["planet_id"],
-                            w["reading_date"],
-                            w["temperature_c"],
-                            w["storm_risk"],
-                            w["visibility"],
-                        ],
+                        [w["planet_id"], w["reading_date"], w["temperature_c"], w["storm_risk"], w["visibility"]],
                     )
                 db.close()
 
@@ -324,6 +264,7 @@ class WeatherIngestV2(Blueprint[WeatherIngestV2Config]):
 
     def render(self, config: WeatherIngestV2Config) -> TaskOrGroup:
         with TaskGroup(group_id=self.step_id) as group:
+
             get_planets = SQLExecuteQueryOperator(
                 task_id="get_planets",
                 conn_id=config.conn_id,
@@ -356,13 +297,7 @@ class WeatherIngestV2(Blueprint[WeatherIngestV2Config]):
                 for w in filtered:
                     db.execute(
                         "INSERT INTO planet_weather VALUES (?, ?, ?, ?, ?)",
-                        [
-                            w["planet_id"],
-                            w["reading_date"],
-                            w["temperature_c"],
-                            w["storm_risk"],
-                            w["visibility"],
-                        ],
+                        [w["planet_id"], w["reading_date"], w["temperature_c"], w["storm_risk"], w["visibility"]],
                     )
                 db.close()
 

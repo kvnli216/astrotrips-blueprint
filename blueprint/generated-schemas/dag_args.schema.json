@@ -10,8 +10,7 @@
         }
       ],
       "default": null,
-      "title": "Schedule",
-      "description": "Cron expression, preset (@daily, @hourly, etc.), timedelta, or null to disable scheduling"
+      "title": "Schedule"
     },
     "description": {
       "anyOf": [
@@ -23,8 +22,7 @@
         }
       ],
       "default": null,
-      "title": "Description",
-      "description": "Human-readable description of the DAG"
+      "title": "Description"
     },
     "dag_id": {
       "type": "string",
@@ -36,112 +34,6 @@
       "additionalProperties": {
         "type": "object"
       }
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "default": [],
-      "title": "Tags",
-      "description": "List of tags for filtering DAGs in the Airflow UI"
-    },
-    "catchup": {
-      "type": "boolean",
-      "default": false,
-      "title": "Catchup",
-      "description": "Whether to backfill missed DAG runs between start_date and now"
-    },
-    "start_date": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "date"
-        },
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Start Date",
-      "description": "Earliest logical date for the DAG (ISO 8601 date or datetime)"
-    },
-    "default_args": {
-      "type": "object",
-      "default": {},
-      "title": "Default Args",
-      "description": "Default arguments applied to all tasks in the DAG (e.g. owner, retries, retry_delay)"
-    },
-    "max_active_runs": {
-      "anyOf": [
-        {
-          "type": "integer",
-          "minimum": 1
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Max Active Runs",
-      "description": "Maximum number of active DAG runs allowed at once"
-    },
-    "max_active_tasks": {
-      "anyOf": [
-        {
-          "type": "integer",
-          "minimum": 1
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Max Active Tasks",
-      "description": "Maximum number of tasks that can run simultaneously across all active runs"
-    },
-    "owner": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Owner",
-      "description": "Owner of the DAG, used in default_args if not overridden"
-    },
-    "is_paused_upon_creation": {
-      "anyOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Is Paused Upon Creation",
-      "description": "Whether the DAG should be paused when first created"
-    },
-    "doc_md": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Doc Md",
-      "description": "Markdown documentation displayed in the Airflow UI"
     }
   },
   "title": "DAG",

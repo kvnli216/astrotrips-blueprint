@@ -1,9 +1,5 @@
 dag_id: astrotrips_setup
 schedule: "@once"
-tags: []
-default_args: {}
-catchup: true
-start_date: null
 description: "Initialize the AstroTrips DuckDB database with schema and sample data"
 
 steps:
